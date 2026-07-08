@@ -5,6 +5,8 @@ channels>=4.1
 channels-redis>=4.2
 daphne>=4.1
 psycopg[binary]>=3.2
-redis>=5.0
+# redis-py 8.x breaks channels_redis 4.3's blocking bzpopmin (client read
+# timeout fires before the 5s server-side block) -> WS drops with TimeoutError.
+redis>=5.0,<6.0
 python-dotenv>=1.0
 django-cors-headers>=4.4
