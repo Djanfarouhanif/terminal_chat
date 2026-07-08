@@ -1,0 +1,53 @@
+# Variante « Nginx système » (ex. VPS Hostinger avec nginx déjà installé).
+# Fait tourner uniquement l'app en Docker ; le Nginx du serveur sert de
+# reverse-proxy TLS vers 127.0.0.1:8000.
+#
+#   docker compose -f docker-compose.app.yml --env-file .env.prod up -d --build
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  web:
+    build: .
+    restart: unless-stopped
+    env_file: .env.prod
+    environment:
+      POSTGRES_HOST: postgres
+      REDIS_HOST: redis
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    # Exposé uniquement en local : seul le Nginx système y accède.
+    # APP_PORT permet d'éviter une collision avec un autre service du serveur
+    # (doit correspondre au port de l'upstream dans deploy/nginx-host.conf).
+    ports:
+      - "127.0.0.1:${APP_PORT:-8000}:8000"
+
+volumes:
+  pgdata:
+  redisdata:

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -137,8 +138,33 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
+# --- Static files (served by WhiteNoise, incl. Django admin) --------------
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    },
+}
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# --- Production hardening (active dès que DEBUG=False) ---------------------
+# Origines de confiance pour le CSRF (schéma inclus) : https://chat.example.com
+CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", "")
+
+if not DEBUG:
+    # Derrière le reverse-proxy Nginx qui termine le TLS.
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    USE_X_FORWARDED_HOST = True
+    SECURE_SSL_REDIRECT = env_bool("SECURE_SSL_REDIRECT", False)  # Nginx s'en charge déjà
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = int(env("SECURE_HSTS_SECONDS", "0"))  # ex. 31536000 une fois sûr
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
 
 LOGGING = {
     "version": 1,

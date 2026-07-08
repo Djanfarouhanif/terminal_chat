@@ -1,0 +1,13 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.env
+.env.prod
+db.sqlite3
+staticfiles/
+*.log
+.git/
+.gitignore
+e2e_test.py
+idle_ws_test.py
