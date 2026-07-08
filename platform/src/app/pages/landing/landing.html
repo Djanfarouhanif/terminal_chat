@@ -7,8 +7,7 @@
      la ligne de commande.</p>
   <div class="cta-row">
     <a class="btn" routerLink="/telecharger">⬇ Télécharger@if (latest()) { v{{ latest()!.version }} }</a>
-    <a class="btn ghost" href="https://github.com/Djanfarouhanif/terminal_chat"
-       target="_blank" rel="noopener">★ Voir sur GitHub</a>
+    <a class="btn ghost" routerLink="/documentation">📖 Documentation</a>
   </div>
 
   <div class="term" appReveal [revealDelay]="120">
@@ -49,11 +48,15 @@
 </div></section>
 
 <section><div class="wrap">
-  <h2>Installation en une commande</h2>
-  <p class="section-sub">Pour les développeurs qui ont Python :</p>
+  <h2>Installer en quelques secondes</h2>
+  <p class="section-sub">Télécharge l'installeur, lance-le, et la commande
+     <span class="mono">relay</span> est disponible dans n'importe quel terminal.</p>
   <div class="code mono" appReveal>
-    <code>pipx install "git+https://github.com/Djanfarouhanif/terminal_chat.git#subdirectory=client"</code>
+    <code>┌─you&#64;relay:~
+└─$ relay</code>
   </div>
-  <p class="section-sub" style="margin-top:30px">Pas de Python ? Prends l'installeur Windows :</p>
-  <div class="cta-row"><a class="btn" routerLink="/telecharger">⬇ Aller aux téléchargements</a></div>
+  <div class="cta-row" style="margin-top:30px">
+    <a class="btn" routerLink="/telecharger">⬇ Télécharger l'installeur</a>
+    <a class="btn ghost" routerLink="/documentation">📖 Lire la documentation</a>
+  </div>
 </div></section>

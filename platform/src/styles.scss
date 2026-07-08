@@ -140,6 +140,17 @@ table.history th{color:var(--muted);font-weight:600;font-size:.8rem;
   text-transform:uppercase;letter-spacing:.5px}
 .empty{text-align:center;color:var(--muted);padding:60px 0}
 
+/* Documentation */
+.doc{margin-bottom:34px}
+.doc h3{color:var(--white);font-size:1.25rem;margin-bottom:10px}
+.doc p{color:var(--text);margin-bottom:10px}
+.doc ol{margin:0 0 10px 20px;color:var(--text)}
+.doc li{margin-bottom:6px}
+.doc .code{margin:12px 0}
+.doc table.history td{padding:10px}
+.doc .note{color:var(--muted);font-size:.9rem;border-left:2px solid var(--line);
+  padding-left:12px;margin-top:12px}
+
 footer.site{border-top:1px solid var(--line);padding:30px 0;margin-top:40px;
   color:var(--muted);font-size:.9rem}
 footer.site .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
