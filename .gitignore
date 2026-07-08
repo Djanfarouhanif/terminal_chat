@@ -18,3 +18,6 @@ db.sqlite3
 .vscode/
 
 # Docker volumes are named, nothing to ignore here
+
+# Python build artifacts
+build/
