@@ -43,7 +43,8 @@ HELP_TEXT = """[b green]COMMANDES DISPONIBLES[/]
   [green]/profile[/]  [green]/status <s>[/]   profil · statut online|busy|away|offline
   [green]/whoami[/]  [green]/clear[/]         infos session · effacer l'écran
   [green]/logout[/]  [green]/exit[/]          déconnexion · quitter
-[dim]  Astuce : tapez du texte sans « / » pour l'envoyer au salon courant.[/]"""
+[dim]  Sans connexion : /login /register /help /clear /exit — le reste exige /login.
+  Astuce : tapez du texte sans « / » pour l'envoyer au salon courant.[/]"""
 
 
 class WSEvent(Message):
@@ -89,6 +90,7 @@ class ChatApp(App):
 
     async def on_mount(self) -> None:
         self.print(BANNER)
+        self.print(HELP_TEXT)          # commandes visibles dès le lancement, connecté ou non
         self._render_ps1()
         self.query_one("#prompt", Input).focus()
         if self.session.is_authenticated:
@@ -356,7 +358,7 @@ class ChatApp(App):
             return
 
         if not self.session.is_authenticated:
-            self.warn("non authentifié. /login <user> <pass>")
+            self.warn(f"/{cmd} exige une connexion. → /login <user> <pass>  ·  /help pour la liste")
             return
 
         try:
