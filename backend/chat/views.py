@@ -1,3 +1,5 @@
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from rest_framework import generics, status
@@ -14,6 +16,21 @@ from .serializers import (
 )
 
 User = get_user_model()
+
+
+def _broadcast_dm(dm):
+    """Pousse un message privé en temps réel à l'expéditeur ET au destinataire."""
+    layer = get_channel_layer()
+    payload = {
+        "type": "dm_message",  # -> DMConsumer.dm_message
+        "id": dm.id,
+        "sender": dm.sender.username,
+        "receiver": dm.receiver.username,
+        "content": dm.content,
+        "created_at": dm.created_at.isoformat(),
+    }
+    for uid in {dm.sender_id, dm.receiver_id}:
+        async_to_sync(layer.group_send)(f"dm_{uid}", payload)
 
 
 class ChannelListCreateView(generics.ListCreateAPIView):
@@ -90,7 +107,8 @@ class DirectMessageListCreateView(generics.ListCreateAPIView):
         receiver = generics.get_object_or_404(
             User, username=self.request.data.get("receiver")
         )
-        serializer.save(sender=self.request.user, receiver=receiver)
+        dm = serializer.save(sender=self.request.user, receiver=receiver)
+        _broadcast_dm(dm)
 
 
 @api_view(["GET"])

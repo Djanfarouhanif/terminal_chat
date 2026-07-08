@@ -154,8 +154,8 @@ class CommandsMixin:
         bits = arg.split(" ", 1)
         user = bits[0]
         if len(bits) == 2 and bits[1].strip():
+            # Envoi via REST ; l'affichage se fait via l'écho temps réel (DMSocket).
             await self.api.send_dm(user, bits[1].strip())
-            self.sys(f"MP → {user} envoyé.")
         else:
             data = await self.api.dm_history(user)
             results = data["results"] if isinstance(data, dict) else data
@@ -202,6 +202,9 @@ class CommandsMixin:
         if self.socket:
             await self.socket.close()
             self.socket = None
+        if self.dm_socket:
+            await self.dm_socket.close()
+            self.dm_socket = None
         await self.api.logout()
         self.current_channel = None
         self._render_ps1()

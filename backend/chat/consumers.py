@@ -146,3 +146,28 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             return None
         msg.delete()
         return msg_id
+
+
+class DMConsumer(AsyncJsonWebsocketConsumer):
+    """Connexion temps réel personnelle : reçoit les messages privés (DM).
+
+    Chaque utilisateur rejoint le groupe `dm_<id>`. L'API `/api/dm` pousse
+    chaque nouveau message privé dans les groupes de l'expéditeur ET du
+    destinataire, qui le reçoivent instantanément.
+    """
+
+    async def connect(self):
+        self.user = self.scope["user"]
+        if not self.user.is_authenticated:
+            await self.close(code=4401)
+            return
+        self.group_name = f"dm_{self.user.id}"
+        await self.channel_layer.group_add(self.group_name, self.channel_name)
+        await self.accept()
+
+    async def disconnect(self, code):
+        if hasattr(self, "group_name"):
+            await self.channel_layer.group_discard(self.group_name, self.channel_name)
+
+    async def dm_message(self, event):
+        await self.send_json(event)

@@ -38,6 +38,7 @@ class ChatApp(CommandsMixin, App):
         self.session = Session.load()
         self.api = ApiClient(self.session)
         self.socket = None
+        self.dm_socket = None                   # connexion perso pour les MP temps réel
         self.current_channel: dict | None = None
         self._transcript: list[str] = []       # plain-text scrollback (tests/debug)
         self._auth_flow: dict | None = None     # staged login/register state
@@ -60,6 +61,7 @@ class ChatApp(CommandsMixin, App):
         if self.session.is_authenticated:
             self.println(f"[dim green]session restaurée : [/][green]{self.session.username}[/]")
             self.load_channels()
+            self._connect_dm()
         else:
             self.println("[yellow]▸ AUTH REQUISE.[/] [dim]/login <user> <pass>  ·  /register <user> <email> <pass>[/]")
 
@@ -176,6 +178,7 @@ class ChatApp(CommandsMixin, App):
         self.sys(f"connecté en tant que [b]{self.session.username}[/].")
         self._render_ps1()
         self.load_channels()
+        self._connect_dm()
 
     # --- data loading --------------------------------------------------
 
@@ -255,6 +258,15 @@ class ChatApp(CommandsMixin, App):
     async def _dispatch_ws(self, event: dict) -> None:
         self.post_message(WSEvent(event))
 
+    def _connect_dm(self) -> None:
+        """Ouvre la connexion perso pour recevoir les messages privés en direct."""
+        if self.dm_socket is not None:
+            return
+        from .ws import DMSocket
+
+        self.dm_socket = DMSocket(self.session, on_event=lambda e: self._dispatch_ws(e))
+        self.dm_socket.start()
+
     # --- ws events -----------------------------------------------------
 
     @on(WSStatus)
@@ -281,6 +293,15 @@ class ChatApp(CommandsMixin, App):
             self.print(f"[dim green]  →→ {escape(e['username'])} a rejoint le canal[/]")
         elif kind == "user_leave":
             self.print(f"[dim green]  ←← {escape(e['username'])} a quitté le canal[/]")
+        elif kind == "dm_message":
+            sender = e.get("sender", "?")
+            content = e.get("content", "")
+            if sender == self.session.username:
+                # écho de mon propre MP envoyé
+                self.print(f"[magenta]✉ → {escape(e.get('receiver', '?'))}[/][dim green]>[/] {escape(content)}")
+            else:
+                self.bell()  # notification sonore
+                self.print(f"[magenta b]✉ {escape(sender)}[/][dim] (privé)[/][dim green]>[/] {escape(content)}")
 
     # --- message rendering ---------------------------------------------
 
@@ -323,6 +344,8 @@ class ChatApp(CommandsMixin, App):
     async def on_unmount(self) -> None:
         if self.socket:
             await self.socket.close()
+        if self.dm_socket:
+            await self.dm_socket.close()
         await self.api.aclose()
 
 
