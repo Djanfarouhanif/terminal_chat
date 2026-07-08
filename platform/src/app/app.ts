@@ -3,6 +3,7 @@ import {
   DestroyRef,
   afterNextRender,
   inject,
+  signal,
 } from '@angular/core';
 import { RouterOutlet, RouterLink, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
@@ -17,6 +18,11 @@ import Lenis from 'lenis';
 export class App {
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
+
+  /** Menu mobile ouvert / fermé. */
+  menuOpen = signal(false);
+  toggleMenu() { this.menuOpen.update((v) => !v); }
+  closeMenu() { this.menuOpen.set(false); }
 
   constructor() {
     // Navigateur uniquement (pas au pré-rendu SSR).
@@ -48,6 +54,7 @@ export class App {
       const sub = this.router.events
         .pipe(filter((e) => e instanceof NavigationEnd))
         .subscribe(() => {
+          this.menuOpen.set(false);
           const fragment = this.router.parseUrl(this.router.url).fragment;
           const el = fragment ? document.getElementById(fragment) : null;
 

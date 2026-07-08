@@ -1,9 +1,13 @@
-<nav class="topbar"><div class="wrap">
-  <a class="logo" routerLink="/"><img src="relay-mark.png" class="brand-mark" alt=""><b>Relay</b></a>
+<nav class="topbar" [class.open]="menuOpen()"><div class="wrap">
+  <a class="logo" routerLink="/" (click)="closeMenu()"><img src="relay-mark.png" class="brand-mark" alt=""><b>Relay</b></a>
+  <button class="nav-toggle" type="button" (click)="toggleMenu()"
+          [attr.aria-expanded]="menuOpen()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <div class="nav-links">
-    <a routerLink="/" fragment="features">Fonctionnalités</a>
-    <a routerLink="/documentation">Documentation</a>
-    <a routerLink="/telecharger">Télécharger</a>
+    <a routerLink="/" fragment="features" (click)="closeMenu()">Fonctionnalités</a>
+    <a routerLink="/documentation" (click)="closeMenu()">Documentation</a>
+    <a routerLink="/telecharger" (click)="closeMenu()">Télécharger</a>
   </div>
 </div></nav>
 
