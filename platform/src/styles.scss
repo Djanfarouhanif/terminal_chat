@@ -53,8 +53,11 @@ a:hover{text-decoration:underline}
 nav.topbar{position:sticky;top:0;z-index:10;backdrop-filter:blur(8px);
   background:rgba(5,8,6,.8);border-bottom:1px solid var(--line)}
 nav.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
-.logo{font-weight:700;color:var(--white);font-size:1.05rem;letter-spacing:.5px}
+.logo{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--white);font-size:1.05rem;letter-spacing:.5px}
 .logo b{color:var(--green)}
+.brand-mark{height:28px;width:28px;display:inline-block;vertical-align:middle;border-radius:6px}
+.foot-brand{display:inline-flex;align-items:center;gap:8px}
+.foot-brand .brand-mark{height:22px;width:22px}
 .nav-links a{margin-left:22px;color:var(--text);font-size:.95rem}
 .nav-links a:hover{color:var(--green);text-decoration:none}
 
