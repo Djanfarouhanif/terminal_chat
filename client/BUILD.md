@@ -57,3 +57,27 @@ installer\Output\HanifChat-Setup.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
 ```
 
 Après installation, `hanif` est disponible dans **tout nouveau terminal**.
+
+---
+
+## Publier une mise à jour du client (avis automatique)
+
+Le client vérifie au démarrage l'endpoint `GET /api/client-version` et, si le
+serveur annonce une version plus récente que la sienne, affiche un avis
+« mise à jour disponible » avec le lien de téléchargement.
+
+Pour publier une nouvelle version du client :
+
+1. **Bumper la version** dans `hanif_cli/__init__.py` (`__version__`) et
+   `pyproject.toml` (`version`) — et `AppVersion` dans `installer/hanif.iss`.
+2. **Reconstruire** : `.\build.ps1`.
+3. **Distribuer** le nouveau `HanifChat-Setup.exe` (ou publier une Release GitHub).
+4. **Annoncer la version côté serveur** (sans rebuild du backend) :
+   ```bash
+   ssh root@srv1153432.hstgr.cloud
+   cd ~/hanif-backend
+   sed -i 's/^CLIENT_LATEST_VERSION=.*/CLIENT_LATEST_VERSION=0.2.0/' .env.prod
+   # (option) mettre à jour CLIENT_DOWNLOAD_URL vers la Release
+   docker compose -f docker-compose.app.yml --env-file .env.prod up -d web
+   ```
+   Dès lors, tous les clients encore en 0.1.0 verront l'avis au démarrage.

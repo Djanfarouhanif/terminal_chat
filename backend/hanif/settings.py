@@ -166,6 +166,14 @@ if not DEBUG:
     SECURE_HSTS_PRELOAD = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
 
+# Version cliente publiée : sert à prévenir les utilisateurs qu'une mise à jour
+# existe. Modifiable côté serveur (env) SANS reconstruire le client.
+CLIENT_LATEST_VERSION = env("CLIENT_LATEST_VERSION", "0.1.0")
+CLIENT_DOWNLOAD_URL = env(
+    "CLIENT_DOWNLOAD_URL",
+    "https://github.com/Djanfarouhanif/terminal_chat/releases",
+)
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

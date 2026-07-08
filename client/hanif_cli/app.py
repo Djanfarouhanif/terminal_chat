@@ -114,6 +114,7 @@ class ChatApp(App):
         self.print(HELP_TEXT)          # commandes visibles dès le lancement, connecté ou non
         self._render_ps1()
         self.query_one("#prompt", Input).focus()
+        self.check_updates()
         if self.session.is_authenticated:
             self.println(f"[dim green]session restaurée : [/][green]{self.session.username}[/]")
             self.load_channels()
@@ -235,6 +236,23 @@ class ChatApp(App):
         self.load_channels()
 
     # --- data loading --------------------------------------------------
+
+    @work(group="update")
+    async def check_updates(self) -> None:
+        """Vérifie si une version plus récente du client est publiée."""
+        from . import __version__
+
+        try:
+            data = await self.api.client_version()
+        except Exception:  # noqa: BLE001 — check silencieux, jamais bloquant
+            return
+        latest = str(data.get("version", ""))
+        url = data.get("download_url", "")
+        if latest and _version_gt(latest, __version__):
+            self.warn(
+                f"mise à jour disponible : v{latest} "
+                f"(vous avez v{__version__}) → {url}"
+            )
 
     @work(exclusive=True, group="channels")
     async def load_channels(self) -> None:
@@ -559,6 +577,19 @@ class ChatApp(App):
         if self.socket:
             await self.socket.close()
         await self.api.aclose()
+
+
+def _version_tuple(v: str) -> tuple:
+    out = []
+    for part in str(v).split("."):
+        digits = "".join(c for c in part if c.isdigit())
+        out.append(int(digits) if digits else 0)
+    return tuple(out)
+
+
+def _version_gt(latest: str, current: str) -> bool:
+    """True si `latest` est strictement plus récent que `current`."""
+    return _version_tuple(latest) > _version_tuple(current)
 
 
 def escape(text) -> str:

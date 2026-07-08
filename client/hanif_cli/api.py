@@ -142,6 +142,9 @@ class ApiClient:
     async def search(self, query: str):
         return await self._request("GET", "/api/search", params={"q": query})
 
+    async def client_version(self):
+        return await self._request("GET", "/api/client-version", auth=False)
+
 
 def _first_error(body) -> str:
     """Extract the first human-readable message from a DRF error body."""
