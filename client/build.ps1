@@ -1,19 +1,19 @@
 # ============================================================================
-#  build.ps1 — reconstruit hanif.exe ET l'installeur Windows en une commande.
+#  build.ps1 — reconstruit relay.exe ET l'installeur Windows en une commande.
 #
 #  Usage (depuis un PowerShell) :
 #     cd client
 #     .\build.ps1
 #
 #  Produit :
-#     client\dist\hanif.exe
-#     client\installer\Output\HanifChat-Setup.exe
+#     client\dist\relay.exe
+#     client\installer\Output\Relay-Setup.exe
 #
 #  À relancer à chaque fois que tu modifies le CLIENT (nouvelle commande /xxx,
 #  affichage, etc.). Les changements BACKEND ne nécessitent PAS de rebuild.
 # ============================================================================
 param(
-    [switch]$ExeOnly  # ne construire que hanif.exe (sauter l'installeur)
+    [switch]$ExeOnly  # ne construire que relay.exe (sauter l'installeur)
 )
 
 # On NE met PAS $ErrorActionPreference = "Stop" : les outils natifs (PyInstaller,
@@ -45,19 +45,19 @@ if ($LASTEXITCODE -ne 0) {
     & $py -m pip install pyinstaller --quiet; Assert-Ok "installation de PyInstaller"
 }
 
-# --- 2. Construire hanif.exe -------------------------------------------------
-Write-Host "==> Construction de hanif.exe (PyInstaller)..." -ForegroundColor Cyan
+# --- 2. Construire relay.exe -------------------------------------------------
+Write-Host "==> Construction de relay.exe (PyInstaller)..." -ForegroundColor Cyan
 & $py -m PyInstaller `
-    --onefile --name hanif --noconfirm --clean --log-level WARN `
+    --onefile --name relay --noconfirm --clean --log-level WARN `
     --collect-all textual `
-    --collect-submodules hanif_cli `
+    --collect-submodules relay_cli `
     --paths . `
     --distpath dist --workpath build\pyi --specpath build `
     build_entry.py
 Assert-Ok "build PyInstaller"
 
-$exe = Join-Path $PSScriptRoot "dist\hanif.exe"
-if (-not (Test-Path $exe)) { Write-Host "ECHEC : hanif.exe introuvable après build." -ForegroundColor Red; exit 1 }
+$exe = Join-Path $PSScriptRoot "dist\relay.exe"
+if (-not (Test-Path $exe)) { Write-Host "ECHEC : relay.exe introuvable après build." -ForegroundColor Red; exit 1 }
 Write-Host ("==> OK : {0} ({1:N1} Mo)" -f $exe, ((Get-Item $exe).Length / 1MB)) -ForegroundColor Green
 
 if ($ExeOnly) {
@@ -85,10 +85,10 @@ if (-not $iscc) {
 }
 
 Write-Host "==> Construction de l'installeur (Inno Setup)..." -ForegroundColor Cyan
-& $iscc "installer\hanif.iss"
+& $iscc "installer\relay.iss"
 Assert-Ok "compilation de l'installeur"
 
-$setup = Join-Path $PSScriptRoot "installer\Output\HanifChat-Setup.exe"
+$setup = Join-Path $PSScriptRoot "installer\Output\Relay-Setup.exe"
 Write-Host ("==> OK : {0} ({1:N1} Mo)" -f $setup, ((Get-Item $setup).Length / 1MB)) -ForegroundColor Green
 
 Write-Host ""

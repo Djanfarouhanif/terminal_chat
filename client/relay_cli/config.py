@@ -6,12 +6,12 @@ import os
 from dataclasses import dataclass, field
 from pathlib import Path
 
-CONFIG_DIR = Path(os.environ.get("HANIF_CONFIG_DIR", Path.home() / ".hanif"))
+CONFIG_DIR = Path(os.environ.get("RELAY_CONFIG_DIR", Path.home() / ".relay"))
 CONFIG_FILE = CONFIG_DIR / "config.json"
 
-# Serveur par défaut = la prod. Surchargez avec la variable d'env HANIF_API
-# (ex. http://127.0.0.1:8000 en développement) ou via `hanif chat --api ...`.
-DEFAULT_API = os.environ.get("HANIF_API", "https://api-chat.hanifcode.fr")
+# Serveur par défaut = la prod. Surchargez avec la variable d'env RELAY_API
+# (ex. http://127.0.0.1:8000 en développement) ou via `relay chat --api ...`.
+DEFAULT_API = os.environ.get("RELAY_API", "https://api-chat.hanifcode.fr")
 
 
 def _http_to_ws(url: str) -> str:

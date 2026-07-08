@@ -1,4 +1,4 @@
-# Construire l'exécutable autonome (hanif.exe)
+# Construire l'exécutable autonome (relay.exe)
 
 Génère un exécutable Windows unique, à envoyer à quelqu'un qui n'a pas Python.
 À lancer **sur Windows** (l'exe produit est spécifique à l'OS de build).
@@ -10,20 +10,20 @@ python -m venv .venv
 pip install -r requirements.txt pyinstaller
 
 python -m PyInstaller \
-  --onefile --name hanif --noconfirm --clean \
+  --onefile --name relay --noconfirm --clean \
   --collect-all textual \
-  --collect-submodules hanif_cli \
+  --collect-submodules relay_cli \
   --paths . \
   --distpath dist --workpath build/pyi --specpath build \
   build_entry.py
 ```
 
-Résultat : `client/dist/hanif.exe` (~17 Mo).
+Résultat : `client/dist/relay.exe` (~17 Mo).
 
 Vérifier :
 ```bash
-dist\hanif.exe version      # -> Hanif Chat CLI 0.1.0
-dist\hanif.exe selftest     # -> OK (l'interface démarre)
+dist\relay.exe version      # -> Relay 0.1.0
+dist\relay.exe selftest     # -> OK (l'interface démarre)
 ```
 
 > Le CSS est intégré au code (`HACKER_CSS` dans `app.py`), donc aucun fichier
@@ -35,28 +35,28 @@ dist\hanif.exe selftest     # -> OK (l'interface démarre)
 
 ## Installeur Windows (Setup.exe)
 
-Produit un `HanifChat-Setup.exe` que n'importe qui double-clique : il installe
-`hanif.exe`, **l'ajoute au PATH** (la commande `hanif` marche alors dans tout
+Produit un `Relay-Setup.exe` que n'importe qui double-clique : il installe
+`relay.exe`, **l'ajoute au PATH** (la commande `relay` marche alors dans tout
 terminal) et crée les raccourcis menu Démarrer + bureau. Installation par
 utilisateur, **sans droits administrateur**.
 
-Prérequis : avoir d'abord construit `dist/hanif.exe` (ci-dessus) et installé
+Prérequis : avoir d'abord construit `dist/relay.exe` (ci-dessus) et installé
 [Inno Setup 6](https://jrsoftware.org/isdl.php) (`winget install JRSoftware.InnoSetup`).
 
 ```bash
 cd client
-"%LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe" installer\hanif.iss
+"%LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe" installer\relay.iss
 ```
 
-Résultat : `client/installer/Output/HanifChat-Setup.exe` (~18 Mo).
+Résultat : `client/installer/Output/Relay-Setup.exe` (~18 Mo).
 
 Installation / désinstallation silencieuses (pour tests) :
 ```bash
-installer\Output\HanifChat-Setup.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
-"%LOCALAPPDATA%\Programs\HanifChat\unins000.exe" /VERYSILENT /SUPPRESSMSGBOXES
+installer\Output\Relay-Setup.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
+"%LOCALAPPDATA%\Programs\Relay\unins000.exe" /VERYSILENT /SUPPRESSMSGBOXES
 ```
 
-Après installation, `hanif` est disponible dans **tout nouveau terminal**.
+Après installation, `relay` est disponible dans **tout nouveau terminal**.
 
 ---
 
@@ -68,10 +68,10 @@ serveur annonce une version plus récente que la sienne, affiche un avis
 
 Pour publier une nouvelle version du client :
 
-1. **Bumper la version** dans `hanif_cli/__init__.py` (`__version__`) et
-   `pyproject.toml` (`version`) — et `AppVersion` dans `installer/hanif.iss`.
+1. **Bumper la version** dans `relay_cli/__init__.py` (`__version__`) et
+   `pyproject.toml` (`version`) — et `AppVersion` dans `installer/relay.iss`.
 2. **Reconstruire** : `.\build.ps1`.
-3. **Distribuer** le nouveau `HanifChat-Setup.exe` (ou publier une Release GitHub).
+3. **Distribuer** le nouveau `Relay-Setup.exe` (ou publier une Release GitHub).
 4. **Annoncer la version côté serveur** (sans rebuild du backend) :
    ```bash
    ssh root@srv1153432.hstgr.cloud

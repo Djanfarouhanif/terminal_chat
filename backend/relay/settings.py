@@ -1,4 +1,4 @@
-"""Django settings for the Hanif Chat CLI backend."""
+"""Django settings for the Relay backend."""
 from datetime import timedelta
 from pathlib import Path
 
@@ -56,7 +56,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "hanif.urls"
+ROOT_URLCONF = "relay.urls"
 
 TEMPLATES = [
     {
@@ -73,8 +73,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "hanif.wsgi.application"
-ASGI_APPLICATION = "hanif.asgi.application"
+WSGI_APPLICATION = "relay.wsgi.application"
+ASGI_APPLICATION = "relay.asgi.application"
 
 DATABASES = {
     "default": {

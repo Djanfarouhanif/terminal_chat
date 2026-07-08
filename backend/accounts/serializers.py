@@ -41,7 +41,7 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         fields = ["avatar", "status"]
 
 
-class HanifTokenObtainPairSerializer(TokenObtainPairSerializer):
+class RelayTokenObtainPairSerializer(TokenObtainPairSerializer):
     """Attach the authenticated user's public info to the token response."""
 
     def validate(self, attrs):

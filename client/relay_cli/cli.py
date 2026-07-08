@@ -1,4 +1,4 @@
-"""Typer entry point for the Hanif Chat CLI client."""
+"""Typer entry point for the Relay client."""
 from __future__ import annotations
 
 import typer
@@ -9,7 +9,7 @@ from .config import CONFIG_FILE, Session
 
 cli = typer.Typer(
     add_completion=False,
-    help="Hanif Chat CLI — messagerie temps réel dans le terminal.",
+    help="Relay — messagerie temps réel dans le terminal.",
 )
 
 
@@ -36,7 +36,7 @@ def logout():
 @cli.command()
 def version():
     """Afficher la version."""
-    typer.echo(f"Hanif Chat CLI {__version__}")
+    typer.echo(f"Relay {__version__}")
 
 
 @cli.command()

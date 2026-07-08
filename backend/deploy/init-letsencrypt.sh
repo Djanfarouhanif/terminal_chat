@@ -1,6 +1,6 @@
 #!/bin/sh
 # ============================================================================
-#  Bootstrap TLS Let's Encrypt pour Hanif Chat.
+#  Bootstrap TLS Let's Encrypt pour Relay.
 #  À lancer UNE fois sur le VPS, après avoir rempli .env.prod et pointé le DNS.
 #  Usage : DOMAIN=chat.example.com EMAIL=vous@mail.com ./deploy/init-letsencrypt.sh
 # ============================================================================

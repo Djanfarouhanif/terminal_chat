@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .serializers import (
-    HanifTokenObtainPairSerializer,
+    RelayTokenObtainPairSerializer,
     ProfileUpdateSerializer,
     RegisterSerializer,
     UserSerializer,
@@ -25,7 +25,7 @@ class RegisterView(generics.CreateAPIView):
 
 
 class LoginView(TokenObtainPairView):
-    serializer_class = HanifTokenObtainPairSerializer
+    serializer_class = RelayTokenObtainPairSerializer
 
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)

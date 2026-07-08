@@ -2,7 +2,7 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hanif.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "relay.settings")
 
 # Initialise Django ASGI application early to populate the app registry
 # before importing code that may reference models/consumers.

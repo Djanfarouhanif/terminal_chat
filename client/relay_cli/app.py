@@ -1,4 +1,4 @@
-"""Hanif Chat CLI — REPL terminal (mode hacker).
+"""Relay — REPL terminal (mode hacker).
 
 Interface mono-fenêtre : un flux qui défile (RichLog) + un prompt façon shell.
 Tout passe par des commandes tapées ; les messages arrivent dans le flux.
@@ -18,13 +18,13 @@ from .api import ApiClient, ApiError
 from .config import Session
 
 BANNER = r"""[b green]
- ██╗  ██╗ █████╗ ███╗   ██╗██╗███████╗
- ██║  ██║██╔══██╗████╗  ██║██║██╔════╝
- ███████║███████║██╔██╗ ██║██║█████╗
- ██╔══██║██╔══██║██║╚██╗██║██║██╔══╝
- ██║  ██║██║  ██║██║ ╚████║██║██║
- ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝[/]
-[green]   H A N I F   C H A T   ::  [dim]secure terminal v0.1[/]
+ ██████╗ ███████╗██╗      █████╗ ██╗   ██╗
+ ██╔══██╗██╔════╝██║     ██╔══██╗╚██╗ ██╔╝
+ ██████╔╝█████╗  ██║     ███████║ ╚████╔╝
+ ██╔══██╗██╔══╝  ██║     ██╔══██║  ╚██╔╝
+ ██║  ██║███████╗███████╗██║  ██║   ██║
+ ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝   ╚═╝[/]
+[green]   R E L A Y   ::  [dim]secure terminal v0.1[/]
 [dim green]   ─────────────────────────────────────────────[/]"""
 
 HELP_TEXT = """[b green]COMMANDES DISPONIBLES[/]
@@ -82,7 +82,7 @@ Input > .input--placeholder { color: #005f2f; }
 
 class ChatApp(App):
     CSS = HACKER_CSS
-    TITLE = "HANIF://SECURE_CHAT"
+    TITLE = "RELAY://SECURE_CHAT"
 
     BINDINGS = [
         ("ctrl+q", "quit", "exit"),
@@ -161,7 +161,7 @@ class ChatApp(App):
         # Badge 2 : lien temps réel (WebSocket sur un salon).
         link = "[green]● live[/]" if self.socket is not None else "[dim green]○ hors-salon[/]"
         top.update(
-            f"[dim green]┌─[/] {auth} [dim green]@hanif :[/] "
+            f"[dim green]┌─[/] {auth} [dim green]@relay :[/] "
             f"[green]#{escape(chan)}[/] [dim green]─[/] {link}"
         )
         inline.update("[dim green]└─$[/] ")

@@ -4,10 +4,10 @@ import os
 import sys
 import tempfile
 
-os.environ["HANIF_CONFIG_DIR"] = tempfile.mkdtemp(prefix="hanif_conn_")
-os.environ["HANIF_API"] = "http://127.0.0.1:8002"
+os.environ["RELAY_CONFIG_DIR"] = tempfile.mkdtemp(prefix="hanif_conn_")
+os.environ["RELAY_API"] = "http://127.0.0.1:8002"
 
-from hanif_cli.app import ChatApp  # noqa: E402
+from relay_cli.app import ChatApp  # noqa: E402
 from textual.widgets import Input, Static  # noqa: E402
 
 SUF = str(os.getpid())

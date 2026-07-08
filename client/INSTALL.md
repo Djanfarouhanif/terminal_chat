@@ -1,4 +1,4 @@
-# Installer le client Hanif Chat sur une autre machine
+# Installer le client Relay sur une autre machine
 
 Le client est une application terminal en Python. La machine cible a besoin de :
 
@@ -13,7 +13,7 @@ Aucune installation du backend n'est nécessaire côté client.
 ## Méthode 1 — pipx (recommandée, une seule commande)
 
 `pipx` installe l'outil dans un environnement isolé et ajoute la commande
-`hanif` au PATH, disponible partout.
+`relay` au PATH, disponible partout.
 
 ```bash
 python -m pip install --user pipx
@@ -23,12 +23,12 @@ pipx install "git+https://github.com/Djanfarouhanif/terminal_chat.git#subdirecto
 
 Lancer :
 ```bash
-hanif
+relay
 ```
 
 Mettre à jour plus tard :
 ```bash
-pipx upgrade hanif-chat-cli
+pipx upgrade relay-cli
 ```
 
 ---
@@ -46,13 +46,13 @@ python -m venv .venv
 source .venv/bin/activate
 
 pip install .
-hanif
+relay
 ```
 
 Variante sans installer le paquet (juste les dépendances) :
 ```bash
 pip install -r requirements.txt
-python -m hanif_cli
+python -m relay_cli
 ```
 
 ---
@@ -71,7 +71,7 @@ python -m hanif_cli
    Salut tout le monde !
    ```
 
-Les jetons de connexion sont mémorisés dans `~/.hanif/config.json`
+Les jetons de connexion sont mémorisés dans `~/.relay/config.json`
 (auto-login aux lancements suivants).
 
 ---
@@ -82,13 +82,13 @@ Le serveur par défaut est la prod. Pour en viser un autre :
 
 ```bash
 # de façon persistante (enregistré dans la config) :
-hanif chat --api https://mon-serveur.exemple.fr
+relay chat --api https://mon-serveur.exemple.fr
 
 # ponctuellement, via variable d'environnement :
 #   Windows PowerShell :
-$env:HANIF_API="http://127.0.0.1:8000"; hanif
+$env:RELAY_API="http://127.0.0.1:8000"; relay
 #   Linux / macOS :
-HANIF_API=http://127.0.0.1:8000 hanif
+RELAY_API=http://127.0.0.1:8000 relay
 ```
 
 ---
@@ -96,7 +96,7 @@ HANIF_API=http://127.0.0.1:8000 hanif
 ## Désinstaller
 
 ```bash
-pipx uninstall hanif-chat-cli        # méthode 1
+pipx uninstall relay-cli        # méthode 1
 # ou supprimez simplement le dossier cloné + .venv   (méthode 2)
-rm -rf ~/.hanif                      # efface la config et les jetons
+rm -rf ~/.relay                      # efface la config et les jetons
 ```

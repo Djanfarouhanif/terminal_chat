@@ -1,4 +1,4 @@
-"""End-to-end smoke test for the Hanif Chat backend (REST + WebSocket)."""
+"""End-to-end smoke test for the Relay backend (REST + WebSocket)."""
 import asyncio
 import json
 import sys

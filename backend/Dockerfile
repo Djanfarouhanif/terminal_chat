@@ -1,4 +1,4 @@
-# Image de production pour le backend Hanif Chat (ASGI / Daphne).
+# Image de production pour le backend Relay (ASGI / Daphne).
 FROM python:3.13-slim
 
 ENV PYTHONUNBUFFERED=1 \

@@ -1,4 +1,4 @@
-# Déploiement Production — Hanif Chat (VPS · Docker · Nginx · TLS)
+# Déploiement Production — Relay (VPS · Docker · Nginx · TLS)
 
 Guide pas à pas pour héberger le backend sur un serveur Linux, accessible en
 HTTPS/WSS. Le client (`../client`) est ensuite distribué aux utilisateurs, qui
@@ -32,7 +32,7 @@ Fichiers concernés : `Dockerfile`, `docker-compose.prod.yml`,
 
 ### 1. Récupérer le code sur le VPS
 ```bash
-git clone <votre-repo> hanif && cd hanif/backend
+git clone <votre-repo> relay && cd relay/backend
 # (ou copiez le dossier backend/ via scp/rsync)
 ```
 
@@ -90,8 +90,8 @@ curl -s -o /dev/null -w "%{http_code}\n" https://VOTRE.DOMAINE/api/channels
 ```
 Puis, côté client :
 ```bash
-HANIF_API=https://VOTRE.DOMAINE python -m hanif_cli
-# ou : python -m hanif_cli chat --api https://VOTRE.DOMAINE
+RELAY_API=https://VOTRE.DOMAINE python -m relay_cli
+# ou : python -m relay_cli chat --api https://VOTRE.DOMAINE
 ```
 Le schéma `https://` est automatiquement converti en `wss://` pour le temps réel.
 

@@ -1,6 +1,6 @@
-# Hanif Chat CLI — Backend
+# Relay — Backend
 
-Backend temps réel (Django + DRF + Channels) pour la messagerie terminal **Hanif Chat CLI**.
+Backend temps réel (Django + DRF + Channels) pour la messagerie terminal **Relay**.
 
 ## Stack
 - Django 5 + Django REST Framework
@@ -22,7 +22,7 @@ py -m venv .venv
 python manage.py migrate
 python manage.py runserver               # dev HTTP+WS via runserver (Channels)
 # ou en ASGI explicite :
-python -m daphne -b 127.0.0.1 -p 8000 hanif.asgi:application
+python -m daphne -b 127.0.0.1 -p 8000 relay.asgi:application
 ```
 
 > Le port hôte de PostgreSQL est **5433** (`POSTGRES_PORT` dans `.env`) pour éviter

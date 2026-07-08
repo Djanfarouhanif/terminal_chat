@@ -1,7 +1,7 @@
-# Hanif Chat CLI — Client REPL (mode hacker)
+# Relay — Client REPL (mode hacker)
 
-Client terminal pour **Hanif Chat CLI**. Interface **REPL mono-fenêtre** façon shell
-hacker : vert phosphore sur noir, bannière ASCII, prompt `┌─user@hanif:#salon`, tout
+Client terminal pour **Relay**. Interface **REPL mono-fenêtre** façon shell
+hacker : vert phosphore sur noir, bannière ASCII, prompt `┌─user@relay:#salon`, tout
 défile ligne par ligne. On tape des commandes ; les messages arrivent dans le flux.
 
 ## Stack
@@ -18,12 +18,12 @@ py -m venv .venv
 # source .venv/bin/activate && pip install -r requirements.txt   # Linux/macOS
 
 # Lancer (le backend doit tourner sur 127.0.0.1:8000)
-./.venv/Scripts/python -m hanif_cli
+./.venv/Scripts/python -m relay_cli
 # backend distant :
-./.venv/Scripts/python -m hanif_cli chat --api https://chat.example.com
+./.venv/Scripts/python -m relay_cli chat --api https://chat.example.com
 ```
 
-Après `pip install -e .`, la commande `hanif` est disponible.
+Après `pip install -e .`, la commande `relay` est disponible.
 
 ## Authentification
 
@@ -37,7 +37,7 @@ Deux façons de s'authentifier :
 /register <user> <mail> <pass> → one-liner
 ```
 
-Les jetons JWT sont stockés dans `~/.hanif/config.json` (auto-login ensuite,
+Les jetons JWT sont stockés dans `~/.relay/config.json` (auto-login ensuite,
 rafraîchissement automatique du token).
 
 ## Commandes
@@ -78,8 +78,8 @@ rafraîchissement automatique du token).
 
 | Variable d'env     | Rôle                                             |
 | ------------------ | ------------------------------------------------ |
-| `HANIF_API`        | URL du backend (défaut `http://127.0.0.1:8000`)  |
-| `HANIF_CONFIG_DIR` | Dossier de config/token (défaut `~/.hanif`)      |
+| `RELAY_API`        | URL du backend (défaut `http://127.0.0.1:8000`)  |
+| `RELAY_CONFIG_DIR` | Dossier de config/token (défaut `~/.relay`)      |
 
 ## Tests (headless, backend requis)
 

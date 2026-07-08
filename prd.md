@@ -1,4 +1,4 @@
-# PRD — Hanif Chat CLI
+# PRD — Relay
 
 ## 1. Vision du produit
 
@@ -10,7 +10,7 @@ Le produit doit être multiplateforme (Windows, Linux et macOS) et permettre à 
 
 # 2. Nom du projet
 
-**Hanif Chat CLI**
+**Relay**
 
 ---
 
@@ -174,7 +174,7 @@ Disposition recommandée :
 
 ```text
 ┌──────────────────────────────────────────────────────────────┐
-│ Hanif Chat CLI                                ● Connecté     │
+│ Relay                                ● Connecté     │
 ├───────────────┬──────────────────────────────────────────────┤
 │ Salons        │ Général                                      │
 │               │                                              │
@@ -240,7 +240,7 @@ Disposition recommandée :
 # 12. Architecture
 
 ```
-                  Hanif Chat CLI
+                  Relay
                          │
                    WebSocket (WSS)
                          │

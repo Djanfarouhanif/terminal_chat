@@ -1,4 +1,4 @@
-# Déploiement Hanif Chat — VPS Hostinger + Nginx système
+# Déploiement Relay — VPS Hostinger + Nginx système
 
 Guide taillé pour **ton** serveur :
 - VPS : `srv1153432.hstgr.cloud` (`82.112.240.14`)
@@ -30,7 +30,7 @@ docker compose version
 ## 3. Récupérer le code
 ```bash
 # Option git (recommandée) :
-git clone <votre-repo> ~/hanif && cd ~/hanif/backend
+git clone <votre-repo> ~/relay && cd ~/relay/backend
 # Option manuelle : envoyez le dossier backend/ via scp depuis votre PC :
 #   scp -r backend root@srv1153432.hstgr.cloud:~/hanif-backend
 ```
@@ -86,8 +86,8 @@ curl -s -o /dev/null -w "%{http_code}\n" https://api-chat.hanifcode.fr/api/chann
 ```
 Puis le client :
 ```bash
-# Windows PowerShell : $env:HANIF_API="https://api-chat.hanifcode.fr"; python -m hanif_cli
-HANIF_API=https://api-chat.hanifcode.fr python -m hanif_cli
+# Windows PowerShell : $env:RELAY_API="https://api-chat.hanifcode.fr"; python -m relay_cli
+RELAY_API=https://api-chat.hanifcode.fr python -m relay_cli
 ```
 Le `https://` devient `wss://` automatiquement pour le temps réel.
 
@@ -101,7 +101,7 @@ docker compose -f docker-compose.app.yml exec web python manage.py createsuperus
 
 ## Exploitation
 
-| Action | Commande (dans ~/hanif/backend) |
+| Action | Commande (dans ~/relay/backend) |
 |---|---|
 | Logs | `docker compose -f docker-compose.app.yml logs -f web` |
 | Redémarrer | `docker compose -f docker-compose.app.yml restart web` |

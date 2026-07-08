@@ -14,6 +14,37 @@ body{
   min-height:100vh;
 }
 .mono{font-family:"Cascadia Code",ui-monospace,"SF Mono",Consolas,monospace}
+
+/* ---- Lenis (défilement à inertie) ---- */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto !important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
+.lenis.lenis-smooth iframe{pointer-events:none}
+
+/* ---- Transitions de navigation (fluidité) ---- */
+/* Crossfade + léger glissement entre les routes via la View Transitions API. */
+::view-transition-old(root){
+  animation:vt-out .22s ease both;
+}
+::view-transition-new(root){
+  animation:vt-in .32s cubic-bezier(.22,.61,.36,1) both;
+}
+@keyframes vt-out{to{opacity:0;transform:translateY(-8px)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(12px)}}
+
+/* Apparition douce du contenu qui se charge (hero, sections, blocs de release). */
+header.hero,section,.release-hero,.empty{
+  animation:fade-up .5s cubic-bezier(.22,.61,.36,1) both;
+}
+@keyframes fade-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* Respecte les préférences d'accessibilité : pas d'animation si non souhaité. */
+@media(prefers-reduced-motion:reduce){
+  ::view-transition-old(root),::view-transition-new(root){animation:none}
+  header.hero,section,.release-hero,.empty{animation:none}
+  html{scroll-behavior:auto}
+}
 a{color:var(--green);text-decoration:none}
 a:hover{text-decoration:underline}
 .wrap{max-width:1040px;margin:0 auto;padding:0 20px}

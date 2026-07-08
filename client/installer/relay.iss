@@ -1,27 +1,27 @@
-; Installeur Windows pour Hanif Chat CLI.
-; Compile : ISCC.exe installer\hanif.iss  (depuis le dossier client/)
-; Produit  : client/installer/Output/HanifChat-Setup.exe
+; Installeur Windows pour Relay.
+; Compile : ISCC.exe installer\relay.iss  (depuis le dossier client/)
+; Produit  : client/installer/Output/Relay-Setup.exe
 ;
-; - Installe hanif.exe (par utilisateur, sans droits admin)
-; - Ajoute le dossier au PATH -> la commande `hanif` marche dans tout terminal
+; - Installe relay.exe (par utilisateur, sans droits admin)
+; - Ajoute le dossier au PATH -> la commande `relay` marche dans tout terminal
 ; - Raccourcis menu Démarrer + bureau (optionnel)
 
-#define AppName "Hanif Chat CLI"
+#define AppName "Relay"
 #define AppVersion "0.1.0"
 #define AppPublisher "Hanif Code"
-#define AppExe "hanif.exe"
+#define AppExe "relay.exe"
 
 [Setup]
 AppId={{8F3A1C4E-9B27-4D6A-A1F2-0A1B2C3D4E5F}
 AppName={#AppName}
 AppVersion={#AppVersion}
 AppPublisher={#AppPublisher}
-DefaultDirName={localappdata}\Programs\HanifChat
+DefaultDirName={localappdata}\Programs\Relay
 DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
 OutputDir=Output
-OutputBaseFilename=HanifChat-Setup
+OutputBaseFilename=Relay-Setup
 Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
@@ -35,7 +35,7 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "desktopicon"; Description: "Créer un raccourci sur le bureau"; GroupDescription: "Raccourcis :"
 
 [Files]
-Source: "..\dist\hanif.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\dist\relay.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExe}"; WorkingDir: "{app}"

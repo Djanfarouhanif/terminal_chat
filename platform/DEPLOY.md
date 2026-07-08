@@ -39,7 +39,7 @@ Rien d'autre à faire : Nginx sert les nouveaux fichiers immédiatement.
 
 1. Aller sur `https://api-chat.hanifcode.fr/admin/` → se connecter.
 2. **Versions de l'application → Ajouter** : version, plateforme, notes,
-   et **uploader l'installeur** (`HanifChat-Setup.exe`).
+   et **uploader l'installeur** (`Relay-Setup.exe`).
 3. Enregistrer → la version apparaît aussitôt sur le site, téléchargeable.
 4. (Option) mettre à jour `CLIENT_LATEST_VERSION` dans `.env.prod` pour
    déclencher l'avis de mise à jour dans le client déjà installé.

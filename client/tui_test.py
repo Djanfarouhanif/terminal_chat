@@ -7,13 +7,13 @@ import os
 import sys
 import tempfile
 
-os.environ["HANIF_CONFIG_DIR"] = tempfile.mkdtemp(prefix="hanif_test_")
-os.environ["HANIF_API"] = "http://127.0.0.1:8000"
+os.environ["RELAY_CONFIG_DIR"] = tempfile.mkdtemp(prefix="hanif_test_")
+os.environ["RELAY_API"] = "http://127.0.0.1:8000"
 
 import httpx  # noqa: E402
 
-from hanif_cli.app import ChatApp  # noqa: E402
-from hanif_cli.config import Session  # noqa: E402
+from relay_cli.app import ChatApp  # noqa: E402
+from relay_cli.config import Session  # noqa: E402
 from textual.widgets import Input  # noqa: E402
 
 SUF = str(os.getpid())

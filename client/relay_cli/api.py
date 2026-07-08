@@ -1,4 +1,4 @@
-"""Async REST client for the Hanif backend (httpx), with JWT refresh."""
+"""Async REST client for the Relay backend (httpx), with JWT refresh."""
 from __future__ import annotations
 
 import httpx

@@ -1,7 +1,7 @@
 [project]
-name = "hanif-chat-cli"
+name = "relay-cli"
 version = "0.1.0"
-description = "Client TUI pour Hanif Chat CLI — messagerie temps réel dans le terminal"
+description = "Relay — messagerie temps réel dans le terminal"
 requires-python = ">=3.11"
 dependencies = [
     "textual>=0.80",
@@ -12,11 +12,11 @@ dependencies = [
 ]
 
 [project.scripts]
-hanif = "hanif_cli.cli:main"
+relay = "relay_cli.cli:main"
 
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["hanif_cli"]
+packages = ["relay_cli"]

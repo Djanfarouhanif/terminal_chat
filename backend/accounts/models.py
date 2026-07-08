@@ -3,7 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    """Custom user model for Hanif Chat CLI."""
+    """Custom user model for Relay."""
 
     class Status(models.TextChoices):
         ONLINE = "online", "En ligne"
