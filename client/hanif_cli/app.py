@@ -130,11 +130,16 @@ class ChatApp(App):
             inline.update(f"[dim green]└─[/][green]{label}[/][dim green]:[/] ")
             return
         prompt.password = False
-        user = self.session.username or "anon"
         chan = self.current_channel["name"] if self.current_channel else "~"
-        link = "[green]● live[/]" if self.socket is not None else "[dim red]○ offline[/]"
+        # Badge 1 : authentification (compte).
+        if self.session.is_authenticated:
+            auth = f"[green]✓ connecté[/] [dim green]{escape(self.session.username)}[/]"
+        else:
+            auth = "[red]✗ déconnecté[/] [dim red]anon[/]"
+        # Badge 2 : lien temps réel (WebSocket sur un salon).
+        link = "[green]● live[/]" if self.socket is not None else "[dim green]○ hors-salon[/]"
         top.update(
-            f"[dim green]┌─[/][green b]{escape(user)}[/][dim green]@hanif[/][dim green]:[/]"
+            f"[dim green]┌─[/] {auth} [dim green]@hanif :[/] "
             f"[green]#{escape(chan)}[/] [dim green]─[/] {link}"
         )
         inline.update("[dim green]└─$[/] ")
@@ -356,6 +361,9 @@ class ChatApp(App):
             self.query_one("#log", RichLog).clear()
             self._transcript.clear()
             return
+        if cmd == "whoami":
+            self._report_connection()
+            return
 
         if not self.session.is_authenticated:
             self.warn(f"/{cmd} exige une connexion. → /login <user> <pass>  ·  /help pour la liste")
@@ -405,8 +413,6 @@ class ChatApp(App):
                     return
                 await self.api.update_profile(status=arg)
                 self.sys(f"statut → {arg}")
-            elif cmd == "whoami":
-                self.sys(f"{self.session.username or 'anon'} @ {self.session.api_url}")
             elif cmd == "logout":
                 await self._logout()
             else:
@@ -415,6 +421,18 @@ class ChatApp(App):
             self.err(f"erreur : {exc.detail}")
         except Exception as exc:  # noqa: BLE001
             self.err(f"erreur : {exc}")
+
+    def _report_connection(self) -> None:
+        """Afficher clairement l'état des deux connexions (compte + temps réel)."""
+        if self.session.is_authenticated:
+            self.print(f"[green]✓ compte    : connecté[/] [dim green]({escape(self.session.username)})[/]")
+        else:
+            self.print("[red]✗ compte    : déconnecté[/] [dim]— /login pour vous authentifier[/]")
+        if self.socket is not None and self.current_channel:
+            self.print(f"[green]✓ temps réel: live[/] [dim green](salon #{escape(self.current_channel['name'])})[/]")
+        else:
+            self.print("[dim green]○ temps réel: hors-salon[/] [dim]— /join <nom> pour recevoir en direct[/]")
+        self.print(f"[dim green]· serveur    : {escape(self.session.api_url)}[/]")
 
     async def _join_by_name(self, name: str) -> None:
         data = await self.api.channels()
