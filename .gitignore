@@ -21,3 +21,5 @@ db.sqlite3
 
 # Python build artifacts
 build/
+dist/
+*.spec

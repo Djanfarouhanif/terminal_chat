@@ -59,8 +59,29 @@ class WSStatus(Message):
         self.status = status
 
 
+HACKER_CSS = """
+/* Mode hacker : vert phosphore sur noir, plein écran, style terminal. */
+Screen { layout: vertical; background: #000000; color: #00ff5f; }
+#log {
+    height: 1fr; background: #000000; color: #00ff5f; padding: 0 1;
+    scrollbar-background: #001a00; scrollbar-color: #00ff5f;
+    scrollbar-size-vertical: 1;
+}
+#ps1top { height: 1; width: 1fr; background: #000000; color: #00ff5f; padding: 0 1; }
+#promptline { height: 1; background: #000000; padding: 0 1; }
+#ps1 { width: auto; height: 1; color: #00ff5f; background: #000000; }
+#prompt {
+    width: 1fr; height: 1; border: none; background: #000000;
+    color: #00ff5f; padding: 0;
+}
+#prompt:focus { border: none; background: #000000; }
+Input > .input--cursor { background: #00ff5f; color: #000000; }
+Input > .input--placeholder { color: #005f2f; }
+"""
+
+
 class ChatApp(App):
-    CSS_PATH = "app.tcss"
+    CSS = HACKER_CSS
     TITLE = "HANIF://SECURE_CHAT"
 
     BINDINGS = [

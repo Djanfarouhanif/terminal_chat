@@ -45,6 +45,25 @@ def where():
     typer.echo(str(CONFIG_FILE))
 
 
+@cli.command()
+def selftest():
+    """Diagnostic : vérifie que l'interface démarre correctement."""
+    import asyncio
+
+    async def _go() -> bool:
+        app = ChatApp()
+        async with app.run_test(size=(80, 24)) as pilot:
+            await pilot.pause()
+        return True
+
+    try:
+        ok = asyncio.run(_go())
+    except Exception as exc:  # noqa: BLE001
+        typer.echo(f"FAIL: {exc}")
+        raise typer.Exit(code=1)
+    typer.echo("OK" if ok else "FAIL")
+
+
 def main() -> None:
     # Bare invocation (no subcommand) launches the chat UI.
     import sys

@@ -20,7 +20,3 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 packages = ["hanif_cli"]
-
-# Embarque la feuille de style Textual dans le paquet installé.
-[tool.setuptools.package-data]
-hanif_cli = ["*.tcss"]
