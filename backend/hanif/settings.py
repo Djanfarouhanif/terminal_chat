@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Local
     "accounts",
     "chat",
+    "releases",
 ]
 
 MIDDLEWARE = [
@@ -132,6 +133,8 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = DEBUG
+# En prod, autoriser explicitement l'origine du site Angular (plateforme).
+CORS_ALLOWED_ORIGINS = env_list("CORS_ALLOWED_ORIGINS", "")
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
@@ -149,6 +152,13 @@ STORAGES = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# --- Media (installeurs uploadés par l'admin) -----------------------------
+MEDIA_URL = "media/"
+MEDIA_ROOT = env("MEDIA_ROOT", str(BASE_DIR / "media"))
+# Upload jusqu'à 200 Mo (installeurs).
+DATA_UPLOAD_MAX_MEMORY_SIZE = 209715200
+FILE_UPLOAD_MAX_MEMORY_SIZE = 209715200
 
 # --- Production hardening (active dès que DEBUG=False) ---------------------
 # Origines de confiance pour le CSRF (schéma inclus) : https://chat.example.com

@@ -1,0 +1,59 @@
+<header class="hero"><div class="wrap">
+  <span class="badge mono">
+    @if (latest()) { v{{ latest()!.version }} · } Windows · Linux · macOS
+  </span>
+  <h1>La messagerie qui vit dans<br><span class="g">ton terminal</span>.</h1>
+  <p class="tagline">Salons, messages privés, temps réel — sans jamais quitter
+     la ligne de commande.</p>
+  <div class="cta-row">
+    <a class="btn" routerLink="/telecharger">⬇ Télécharger@if (latest()) { v{{ latest()!.version }} }</a>
+    <a class="btn ghost" href="https://github.com/Djanfarouhanif/terminal_chat"
+       target="_blank" rel="noopener">★ Voir sur GitHub</a>
+  </div>
+
+  <div class="term">
+    <div class="term-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="term-title mono">HANIF://SECURE_CHAT</span>
+    </div>
+    <pre class="mono">⬡ <span class="u">HANIF CHAT</span> :: secure terminal
+<span class="dim">─────────────────────────────────────</span>
+<span class="dim">*** connexion à</span> #backend <span class="dim">***</span>
+23:14:02 <span class="u">amin</span><span class="dim">></span> salut, ça avance ?
+23:14:07 <span class="u">john</span><span class="dim">></span> oui, je push dans 5 min
+23:14:19 <span class="dim">→→ hanif a rejoint le canal</span>
+23:14:22 <span class="u">hanif</span><span class="dim">></span> nickel, je review
+<span class="dim">┌─</span>hanif&#64;hanif:#backend <span class="dim">─ ● live</span>
+<span class="dim">└─$</span> _</pre>
+  </div>
+</div></header>
+
+<section id="features"><div class="wrap">
+  <h2>Pensé pour ceux qui vivent au clavier</h2>
+  <p class="section-sub">Léger, rapide, multiplateforme.</p>
+  <div class="grid">
+    <div class="card"><div class="ico">⚡</div><h3>Temps réel</h3>
+      <p>Messages instantanés via WebSocket. Tu vois les autres écrire en direct.</p></div>
+    <div class="card"><div class="ico">#</div><h3>Salons</h3>
+      <p>Crée, rejoins et quitte des salons de discussion en une commande.</p></div>
+    <div class="card"><div class="ico">✉</div><h3>Messages privés</h3>
+      <p>Discussions en tête-à-tête et historique conservé.</p></div>
+    <div class="card"><div class="ico">🖥</div><h3>Multiplateforme</h3>
+      <p>Windows, Linux et macOS. Un seul installeur, aucune dépendance à gérer.</p></div>
+    <div class="card"><div class="ico">🔒</div><h3>Sécurisé</h3>
+      <p>Authentification JWT, connexions chiffrées (WSS), mots de passe hachés.</p></div>
+    <div class="card"><div class="ico">⌨</div><h3>Zéro souris</h3>
+      <p>Tout au clavier, avec <span class="mono">/join</span>,
+        <span class="mono">/dm</span>, <span class="mono">/search</span>…</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Installation en une commande</h2>
+  <p class="section-sub">Pour les développeurs qui ont Python :</p>
+  <div class="code mono">
+    <code>pipx install "git+https://github.com/Djanfarouhanif/terminal_chat.git#subdirectory=client"</code>
+  </div>
+  <p class="section-sub" style="margin-top:30px">Pas de Python ? Prends l'installeur Windows :</p>
+  <div class="cta-row"><a class="btn" routerLink="/telecharger">⬇ Aller aux téléchargements</a></div>
+</div></section>
