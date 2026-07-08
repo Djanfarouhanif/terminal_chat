@@ -93,5 +93,11 @@ Assert-Ok "compilation de l'installeur"
 $setup = Join-Path $PSScriptRoot "installer\Output\Relay-Setup.exe"
 Write-Host ("==> OK : {0} ({1:N1} Mo)" -f $setup, ((Get-Item $setup).Length / 1MB)) -ForegroundColor Green
 
+# --- 4. Zipper l'installeur (distribution : réduit l'alerte SmartScreen) -----
+$zip = Join-Path $PSScriptRoot "installer\Output\Relay-Setup.zip"
+if (Test-Path $zip) { Remove-Item $zip -Force }
+Compress-Archive -Path $setup -DestinationPath $zip -CompressionLevel Optimal
+Write-Host ("==> OK : {0} ({1:N1} Mo)" -f $zip, ((Get-Item $zip).Length / 1MB)) -ForegroundColor Green
+
 Write-Host ""
-Write-Host "TERMINE. A distribuer : $setup" -ForegroundColor Green
+Write-Host "TERMINE. A distribuer : $zip" -ForegroundColor Green

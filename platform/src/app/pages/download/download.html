@@ -48,10 +48,15 @@
       </div>
     }
 
-    <p class="meta mono" style="margin-top:34px">
-      ⚠ L'installeur n'est pas signé : Windows peut afficher « Windows a protégé
-      votre ordinateur ». Cliquez sur « Informations complémentaires » →
-      « Exécuter quand même ».</p>
+    <div class="meta mono" style="margin-top:34px">
+      <p><strong style="color:var(--green)">Installation</strong> — le téléchargement est un <b>.zip</b> :</p>
+      <p>1. Dézippez-le (clic droit → « Extraire tout », ou 7-Zip).</p>
+      <p>2. Lancez <b>Relay-Setup.exe</b>.</p>
+      <p style="margin-top:10px">⚠ Si Windows affiche « Windows a protégé votre ordinateur » :
+        clic droit sur le fichier → <b>Propriétés</b> → cochez <b>« Débloquer »</b> → OK
+        (ou « Informations complémentaires » → « Exécuter quand même »). L'app n'est
+        pas signée, mais elle est sûre.</p>
+    </div>
   } @else {
     <div class="empty" appReveal>
       <p style="font-size:1.1rem">Aucune version publiée pour le moment.</p>
