@@ -27,6 +27,8 @@ SolidCompression=yes
 WizardStyle=modern
 ChangesEnvironment=yes
 ArchitecturesInstallIn64BitMode=x64compatible
+SetupIconFile=relay.ico
+UninstallDisplayIcon={app}\{#AppExe}
 
 [Languages]
 Name: "french"; MessagesFile: "compiler:Languages\French.isl"

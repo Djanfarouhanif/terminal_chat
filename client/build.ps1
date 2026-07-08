@@ -49,6 +49,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "==> Construction de relay.exe (PyInstaller)..." -ForegroundColor Cyan
 & $py -m PyInstaller `
     --onefile --name relay --noconfirm --clean --log-level WARN `
+    --icon "$PSScriptRoot\installer\relay.ico" `
+    --exclude-module PIL --exclude-module numpy `
     --collect-all textual `
     --collect-submodules relay_cli `
     --paths . `
