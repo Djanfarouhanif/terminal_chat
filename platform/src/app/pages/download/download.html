@@ -6,7 +6,7 @@
   @if (loading()) {
     <p class="meta mono">Chargement des versions…</p>
   } @else if (latest(); as l) {
-    <div class="release-hero">
+    <div class="release-hero" appReveal>
       <div class="top">
         <div>
           <span class="pill mono">Dernière version</span>
@@ -35,7 +35,7 @@
 
     @if (history().length) {
       <h3 style="color:var(--white);margin:28px 0 6px">Versions précédentes</h3>
-      <table class="history">
+      <table class="history" appReveal [revealDelay]="80">
         <thead><tr><th>Version</th><th>Plateforme</th><th>Taille</th><th>Date</th><th></th></tr></thead>
         <tbody>
           @for (r of history(); track r.id) {
@@ -57,7 +57,7 @@
       votre ordinateur ». Cliquez sur « Informations complémentaires » →
       « Exécuter quand même ».</p>
   } @else {
-    <div class="empty">
+    <div class="empty" appReveal>
       <p style="font-size:1.1rem">Aucune version publiée pour le moment.</p>
       <p class="mono" style="margin-top:10px">Reviens bientôt, ou installe depuis le
         <a href="https://github.com/Djanfarouhanif/terminal_chat" target="_blank" rel="noopener">code source</a>.</p>

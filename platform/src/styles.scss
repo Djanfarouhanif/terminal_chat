@@ -33,16 +33,25 @@ html.lenis,html.lenis body{height:auto}
 @keyframes vt-out{to{opacity:0;transform:translateY(-8px)}}
 @keyframes vt-in{from{opacity:0;transform:translateY(12px)}}
 
-/* Apparition douce du contenu qui se charge (hero, sections, blocs de release). */
-header.hero,section,.release-hero,.empty{
-  animation:fade-up .5s cubic-bezier(.22,.61,.36,1) both;
+/* ---- Directive [appReveal] : apparition au scroll ---- */
+/* État initial (caché) — appliqué dès que la directive pose data-reveal. */
+[data-reveal]{
+  opacity:0;
+  transition:opacity .6s cubic-bezier(.22,.61,.36,1),
+             transform .6s cubic-bezier(.22,.61,.36,1);
+  will-change:opacity,transform;
 }
-@keyframes fade-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+[data-reveal="up"]   {transform:translateY(24px)}
+[data-reveal="down"] {transform:translateY(-24px)}
+[data-reveal="left"] {transform:translateX(-24px)}
+[data-reveal="right"]{transform:translateX(24px)}
+/* État révélé (dans le viewport). */
+[data-reveal].is-visible{opacity:1;transform:none}
 
 /* Respecte les préférences d'accessibilité : pas d'animation si non souhaité. */
 @media(prefers-reduced-motion:reduce){
   ::view-transition-old(root),::view-transition-new(root){animation:none}
-  header.hero,section,.release-hero,.empty{animation:none}
+  [data-reveal]{transition:none;opacity:1;transform:none}
   html{scroll-behavior:auto}
 }
 a{color:var(--green);text-decoration:none}

@@ -2,10 +2,11 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ReleaseService } from '../../services/release.service';
 import { Release } from '../../models/release';
+import { RevealDirective } from '../../directives/reveal.directive';
 
 @Component({
   selector: 'app-download',
-  imports: [DatePipe],
+  imports: [DatePipe, RevealDirective],
   templateUrl: './download.html',
 })
 export class Download {

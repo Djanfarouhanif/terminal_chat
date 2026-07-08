@@ -2,10 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ReleaseService } from '../../services/release.service';
 import { Release } from '../../models/release';
+import { RevealDirective } from '../../directives/reveal.directive';
 
 @Component({
   selector: 'app-landing',
-  imports: [RouterLink],
+  imports: [RouterLink, RevealDirective],
   templateUrl: './landing.html',
 })
 export class Landing {
