@@ -34,22 +34,18 @@
     </div>
 
     @if (history().length) {
-      <h3 style="color:var(--white);margin:28px 0 6px">Versions précédentes</h3>
-      <table class="history" appReveal [revealDelay]="80">
-        <thead><tr><th>Version</th><th>Plateforme</th><th>Taille</th><th>Date</th><th></th></tr></thead>
-        <tbody>
-          @for (r of history(); track r.id) {
-            <tr>
-              <td class="mono" style="color:var(--green)">v{{ r.version }}</td>
-              <td>{{ r.platform_display }}</td>
-              <td class="mono">{{ sizeMb(r.size_bytes) }}</td>
-              <td class="mono">{{ r.created_at | date:'dd/MM/yyyy' }}</td>
-              <td style="text-align:right">
-                <a class="btn ghost small" [href]="r.download_url">⬇ Télécharger</a></td>
-            </tr>
-          }
-        </tbody>
-      </table>
+      <h3 style="color:var(--white);margin:28px 0 12px">Versions précédentes</h3>
+      <div class="rel-list" appReveal [revealDelay]="80">
+        @for (r of history(); track r.id) {
+          <div class="rel-row">
+            <div class="rel-info">
+              <span class="rel-ver mono">v{{ r.version }}</span>
+              <span class="rel-meta mono">{{ r.platform_display }} · {{ sizeMb(r.size_bytes) }} · {{ r.created_at | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <a class="btn ghost small" [href]="r.download_url">⬇ Télécharger</a>
+          </div>
+        }
+      </div>
     }
 
     <p class="meta mono" style="margin-top:34px">
@@ -59,8 +55,8 @@
   } @else {
     <div class="empty" appReveal>
       <p style="font-size:1.1rem">Aucune version publiée pour le moment.</p>
-      <p class="mono" style="margin-top:10px">Reviens bientôt, ou installe depuis le
-        <a href="https://github.com/Djanfarouhanif/terminal_chat" target="_blank" rel="noopener">code source</a>.</p>
+      <p class="mono" style="margin-top:10px">Reviens bientôt, ou consulte la
+        <a routerLink="/documentation">documentation</a>.</p>
     </div>
   }
 </div></section>
