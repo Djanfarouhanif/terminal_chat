@@ -42,6 +42,9 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    volumes:
+      # Persiste les installeurs uploadés par l'admin (MEDIA_ROOT=/app/media).
+      - media:/app/media
     # Exposé uniquement en local : seul le Nginx système y accède.
     # APP_PORT permet d'éviter une collision avec un autre service du serveur
     # (doit correspondre au port de l'upstream dans deploy/nginx-host.conf).
@@ -51,3 +54,4 @@ services:
 volumes:
   pgdata:
   redisdata:
+  media:
