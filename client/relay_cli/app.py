@@ -7,6 +7,7 @@ messages internes dans `messages.py`.
 """
 from __future__ import annotations
 
+import time
 from datetime import datetime
 
 from rich.text import Text
@@ -42,6 +43,7 @@ class ChatApp(CommandsMixin, App):
         self.current_channel: dict | None = None
         self._transcript: list[str] = []       # plain-text scrollback (tests/debug)
         self._auth_flow: dict | None = None     # staged login/register state
+        self._last_typing = 0.0                 # throttle des notifs « écrit »
 
     # --- composition ---------------------------------------------------
 
@@ -111,6 +113,25 @@ class ChatApp(CommandsMixin, App):
         inline.update("[dim green]└─$[/] ")
 
     # --- top-level input ----------------------------------------------
+
+    @on(Input.Changed, "#prompt")
+    def _on_typing(self, event: Input.Changed) -> None:
+        """Prévient les autres que je suis en train d'écrire (throttlé ~2 s)."""
+        if self.socket is None or self.current_channel is None or self._auth_flow:
+            return
+        val = event.value
+        if not val or val.startswith("/"):
+            return
+        now = time.monotonic()
+        if now - self._last_typing < 2.0:
+            return
+        self._last_typing = now
+        self._notify_typing()
+
+    @work(group="typing")
+    async def _notify_typing(self) -> None:
+        if self.socket is not None:
+            await self.socket.send_typing()
 
     @on(Input.Submitted, "#prompt")
     def _on_submit(self, event: Input.Submitted) -> None:
