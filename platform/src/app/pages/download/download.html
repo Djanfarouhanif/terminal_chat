@@ -35,16 +35,29 @@
 
     @if (history().length) {
       <h3 style="color:var(--white);margin:28px 0 12px">Versions précédentes</h3>
-      <div class="rel-list" appReveal [revealDelay]="80">
-        @for (r of history(); track r.id) {
-          <div class="rel-row">
-            <div class="rel-info">
-              <span class="rel-ver mono">v{{ r.version }}</span>
-              <span class="rel-meta mono">{{ r.platform_display }} · {{ sizeMb(r.size_bytes) }} · {{ r.created_at | date:'dd/MM/yyyy' }}</span>
-            </div>
-            <a class="btn ghost small" [href]="r.download_url">⬇ Télécharger</a>
-          </div>
-        }
+      <div class="tbl-wrap" appReveal [revealDelay]="80">
+        <table class="rel-table">
+          <thead>
+            <tr>
+              <th>Version</th>
+              <th>Plateforme</th>
+              <th>Téléchargement</th>
+              <th>Date</th>
+              <th class="right">Taille</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (r of history(); track r.id) {
+              <tr>
+                <td class="rv mono">v{{ r.version }}</td>
+                <td>{{ r.platform_display }}</td>
+                <td><a class="dl mono" [href]="r.download_url">⬇ Télécharger</a></td>
+                <td class="mono muted">{{ r.created_at | date:'dd/MM/yyyy' }}</td>
+                <td class="mono muted right">{{ sizeMb(r.size_bytes) }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
       </div>
     }
 
