@@ -3,17 +3,19 @@
   --bg:#050806; --panel:#0e140f; --line:#173d24;
   --green:#00ff5f; --green-dim:#0bbb48; --green-fade:#0a3a1e;
   --text:#c9f5d8; --muted:#6f9a7e; --white:#eafff1;
+  /* Police du projet : monospace, dans l'esprit terminal. */
+  --font:"Cascadia Code","JetBrains Mono","Fira Code",ui-monospace,"SF Mono",Consolas,"Liberation Mono",monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
   background:var(--bg);color:var(--text);
-  font-family:"Segoe UI",system-ui,-apple-system,sans-serif;
+  font-family:var(--font);
   line-height:1.6;-webkit-font-smoothing:antialiased;
   background-image:radial-gradient(circle at 50% -10%,rgba(0,255,95,.06),transparent 55%);
   min-height:100vh;
 }
-.mono{font-family:"Cascadia Code",ui-monospace,"SF Mono",Consolas,monospace}
+.mono{font-family:var(--font)}
 
 /* ---- Lenis (défilement à inertie) ---- */
 html.lenis,html.lenis body{height:auto}
