@@ -11,6 +11,7 @@ html{scroll-behavior:smooth}
 body{
   background:var(--bg);color:var(--text);
   font-family:var(--font);
+  font-weight:200;                 /* texte normal : fin */
   line-height:1.6;-webkit-font-smoothing:antialiased;
   background-image:radial-gradient(circle at 50% -10%,rgba(0,255,95,.06),transparent 55%);
   min-height:100vh;
