@@ -34,28 +34,54 @@
   </div>
 
   <div class="doc" appReveal>
-    <h3>3. Créer un compte / se connecter</h3>
+    <h3>3. Créer un compte &amp; se connecter</h3>
+    <p>Au premier lancement, crée ton compte (pseudo, email, mot de passe) :</p>
     <div class="code mono">
-      <code>/register monpseudo mon&#64;email.fr monMotDePasse
-/login monpseudo monMotDePasse</code>
+      <code>/register monpseudo mon&#64;email.fr monMotDePasse</code>
     </div>
-    <p>Les identifiants sont mémorisés : aux lancements suivants, tu es
-      reconnecté automatiquement. Le mot de passe peut être saisi masqué en
-      tapant simplement <span class="mono">/login</span> puis en répondant aux
-      invites.</p>
+    <p>Pour te reconnecter plus tard :</p>
+    <div class="code mono">
+      <code>/login monpseudo monMotDePasse</code>
+    </div>
+    <p>🔒 Astuce : tape simplement <span class="mono">/login</span> (sans rien
+      d'autre) pour saisir ton mot de passe <b>masqué</b>, à l'abri des regards.</p>
+    <p>Tes identifiants sont mémorisés : aux lancements suivants, tu es
+      <b>reconnecté automatiquement</b> — pas besoin de retaper quoi que ce soit.</p>
   </div>
 
   <div class="doc" appReveal>
-    <h3>4. Discuter</h3>
+    <h3>4. Discuter en groupe (salons)</h3>
+    <p>Un <b>salon</b> est une discussion à plusieurs, en temps réel.</p>
     <div class="code mono">
-      <code>/join general          # rejoindre un salon
-Salut tout le monde !  # message (texte sans « / »)
-/dm amin coucou        # message privé</code>
+      <code>/channels          # voir les salons existants
+/create backend    # créer un salon
+/join backend      # rejoindre / ouvrir un salon
+Salut l'équipe !   # écrire : tape du texte SANS « / »
+/leave             # quitter le salon</code>
     </div>
+    <p>Tout le monde présent dans le salon voit tes messages
+      <b>instantanément</b>. Ceux qui rejoignent plus tard retrouvent
+      l'historique. Tu peux corriger ou retirer tes messages avec
+      <span class="mono">/edit &lt;id&gt;</span> et <span class="mono">/del &lt;id&gt;</span>
+      (chaque message affiche son <span class="mono">#id</span>).</p>
   </div>
 
   <div class="doc" appReveal>
-    <h3>5. Commandes</h3>
+    <h3>5. Messages privés (DM)</h3>
+    <p>Pour parler à <b>une seule personne</b>, en privé et <b>en temps réel</b> :</p>
+    <div class="code mono">
+      <code>/dm alice Salut, tu es dispo ?   # envoyer un MP à alice
+/dm alice                        # revoir l'historique avec alice
+/users                           # voir qui a un compte</code>
+    </div>
+    <p>Quand quelqu'un t'écrit en privé, le message apparaît aussitôt dans ton
+      flux — <span class="mono">✉ alice (privé)&gt; …</span> — avec une petite
+      notification sonore, même si tu es dans un salon. Personne d'autre ne voit
+      vos échanges.</p>
+  </div>
+
+  <div class="doc" appReveal>
+    <h3>6. Toutes les commandes</h3>
     <table class="history">
       <tbody>
         <tr><td class="mono">/help</td><td>Afficher l'aide</td></tr>
@@ -77,7 +103,7 @@ Salut tout le monde !  # message (texte sans « / »)
   </div>
 
   <div class="doc" appReveal>
-    <h3>6. Raccourcis clavier</h3>
+    <h3>7. Raccourcis clavier</h3>
     <table class="history">
       <tbody>
         <tr><td class="mono">Ctrl + N</td><td>Nouveau salon</td></tr>
@@ -89,7 +115,7 @@ Salut tout le monde !  # message (texte sans « / »)
   </div>
 
   <div class="doc" appReveal>
-    <h3>7. Mises à jour</h3>
+    <h3>8. Mises à jour</h3>
     <p>Relay vérifie au démarrage si une version plus récente est disponible et
       te prévient avec le lien de téléchargement. Il te suffit alors de
       récupérer le nouvel installeur sur la
