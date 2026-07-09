@@ -24,6 +24,7 @@ class Session:
     access: str = ""
     refresh: str = ""
     username: str = ""
+    help_shown: bool = False   # l'aide complète a déjà été affichée au moins une fois
 
     @property
     def ws_url(self) -> str:
@@ -44,6 +45,7 @@ class Session:
                     "access": self.access,
                     "refresh": self.refresh,
                     "username": self.username,
+                    "help_shown": self.help_shown,
                 },
                 indent=2,
             ),
@@ -66,6 +68,7 @@ class Session:
                     access=data.get("access", ""),
                     refresh=data.get("refresh", ""),
                     username=data.get("username", ""),
+                    help_shown=data.get("help_shown", False),
                 )
             except (json.JSONDecodeError, OSError):
                 pass

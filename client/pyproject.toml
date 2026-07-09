@@ -1,6 +1,6 @@
 [project]
 name = "relay-cli"
-version = "0.2.2"
+version = "0.2.3"
 description = "Relay — messagerie temps réel dans le terminal"
 requires-python = ">=3.11"
 dependencies = [

@@ -7,7 +7,7 @@
 ; - Raccourcis menu Démarrer + bureau (optionnel)
 
 #define AppName "Relay"
-#define AppVersion "0.2.2"
+#define AppVersion "0.2.3"
 #define AppPublisher "Hanif Code"
 #define AppExe "relay.exe"
 

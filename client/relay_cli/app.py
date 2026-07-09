@@ -58,7 +58,13 @@ class ChatApp(CommandsMixin, App):
 
     async def on_mount(self) -> None:
         self.print(BANNER)
-        self.print(HELP_TEXT)          # commandes visibles dès le lancement, connecté ou non
+        # Aide complète seulement au tout premier lancement ; ensuite un rappel.
+        if not self.session.help_shown:
+            self.print(HELP_TEXT)
+            self.session.help_shown = True
+            self.session.save()
+        else:
+            self.print("[dim green]Tapez [/][green]/help[/][dim green] pour afficher les commandes.[/]")
         self._render_ps1()
         self.query_one("#prompt", Input).focus()
         self.set_interval(1.0, self._refresh_typing)  # expire l'indicateur « écrit »
