@@ -44,11 +44,13 @@ class ChatApp(CommandsMixin, App):
         self._transcript: list[str] = []       # plain-text scrollback (tests/debug)
         self._auth_flow: dict | None = None     # staged login/register state
         self._last_typing = 0.0                 # throttle des notifs « écrit »
+        self._typers: dict[str, float] = {}     # qui écrit en ce moment (username -> t)
 
     # --- composition ---------------------------------------------------
 
     def compose(self) -> ComposeResult:
         yield RichLog(id="log", wrap=True, markup=True, highlight=False, auto_scroll=True)
+        yield Static("", id="typing")
         yield Static("", id="ps1top")
         with Horizontal(id="promptline"):
             yield Static("", id="ps1")
@@ -59,6 +61,7 @@ class ChatApp(CommandsMixin, App):
         self.print(HELP_TEXT)          # commandes visibles dès le lancement, connecté ou non
         self._render_ps1()
         self.query_one("#prompt", Input).focus()
+        self.set_interval(1.0, self._refresh_typing)  # expire l'indicateur « écrit »
         self.check_updates()
         if self.session.is_authenticated:
             self.println(f"[dim green]session restaurée : [/][green]{self.session.username}[/]")
@@ -244,6 +247,8 @@ class ChatApp(CommandsMixin, App):
         self.print(f"[dim green]*** connexion à [/][green b]#{escape(channel['name'])}[/][dim green] ***[/]")
         await self._load_history()
         await self._connect_ws(channel["name"])
+        self._typers.clear()
+        self._refresh_typing()
         self._render_ps1()
 
     async def _load_history(self) -> None:
@@ -309,7 +314,8 @@ class ChatApp(CommandsMixin, App):
         elif kind == "delete":
             self.print(f"[dim green]  ~ msg #{e['id']} supprimé[/]")
         elif kind == "typing":
-            self.print(f"[dim green]  … {escape(e['username'])} écrit[/]")
+            self._typers[e["username"]] = time.monotonic()
+            self._refresh_typing()
         elif kind == "user_join":
             self.print(f"[dim green]  →→ {escape(e['username'])} a rejoint le canal[/]")
         elif kind == "user_leave":
@@ -323,6 +329,24 @@ class ChatApp(CommandsMixin, App):
             else:
                 self.bell()  # notification sonore
                 self.print(f"[magenta b]✉ {escape(sender)}[/][dim] (privé)[/][dim green]>[/] {escape(content)}")
+
+    def _refresh_typing(self) -> None:
+        """Affiche « … x écrit » sur une ligne dédiée et retire ceux qui ont arrêté."""
+        now = time.monotonic()
+        self._typers = {u: t for u, t in self._typers.items() if now - t < 3.5}
+        names = list(self._typers.keys())
+        if not names:
+            text = ""
+        elif len(names) == 1:
+            text = f"… {escape(names[0])} écrit…"
+        elif len(names) == 2:
+            text = f"… {escape(names[0])}, {escape(names[1])} écrivent…"
+        else:
+            text = f"… {escape(names[0])}, {escape(names[1])} +{len(names) - 2} écrivent…"
+        try:
+            self.query_one("#typing", Static).update(text)
+        except Exception:  # noqa: BLE001 — widget absent pendant le teardown
+            pass
 
     # --- message rendering ---------------------------------------------
 

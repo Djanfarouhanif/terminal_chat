@@ -41,6 +41,7 @@ Screen { layout: vertical; background: #000000; color: #00ff5f; }
     scrollbar-background: #001a00; scrollbar-color: #00ff5f;
     scrollbar-size-vertical: 1;
 }
+#typing { height: 1; width: 1fr; background: #000000; color: #0bbb48; padding: 0 1; }
 #ps1top { height: 1; width: 1fr; background: #000000; color: #00ff5f; padding: 0 1; }
 #promptline { height: 1; background: #000000; padding: 0 1; }
 #ps1 { width: auto; height: 1; color: #00ff5f; background: #000000; }

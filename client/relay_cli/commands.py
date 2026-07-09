@@ -144,6 +144,8 @@ class CommandsMixin:
             await self.socket.close()
             self.socket = None
         self.current_channel = None
+        self._typers.clear()
+        self._refresh_typing()
         self._render_ps1()
         self.sys(f"vous avez quitté #{name}.")
 
