@@ -22,7 +22,10 @@ class AppRelease(models.Model):
         "Publiée", default=True,
         help_text="Décocher pour préparer une version sans la rendre visible.",
     )
-    downloads = models.PositiveIntegerField("Téléchargements", default=0, editable=False)
+    downloads = models.PositiveIntegerField(
+        "Téléchargements", default=0,
+        help_text="Compteur automatique — modifiable manuellement si besoin.",
+    )
     created_at = models.DateTimeField("Ajoutée le", auto_now_add=True)
 
     class Meta:

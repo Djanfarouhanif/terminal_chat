@@ -8,7 +8,7 @@ class AppReleaseAdmin(admin.ModelAdmin):
     list_display = ("version", "platform", "is_published", "downloads", "created_at")
     list_filter = ("platform", "is_published")
     search_fields = ("version", "title", "notes")
-    readonly_fields = ("downloads", "created_at")
+    readonly_fields = ("created_at",)
     fieldsets = (
         (None, {"fields": ("version", "platform", "title")}),
         ("Fichier", {"fields": ("file",)}),
